@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutteraichatbot/chat_message_type.dart';
+import 'package:flutteraichatbot/chat_message_widget.dart';
 import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
@@ -60,8 +61,29 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text('AI Chatbot'),
         backgroundColor: Colors.green[700],
+        elevation: 0,
+        centerTitle: true,
       ),
       backgroundColor: const Color.fromARGB(31, 14, 49, 7),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  var message = _messages[index];
+                  return ChatMessageWidget(
+                    text: message.text,
+                    chatMessageType: message.chatMessageType,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
