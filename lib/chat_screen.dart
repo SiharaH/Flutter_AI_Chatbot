@@ -81,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               ),
             ),
-            Visibility(child:Padding(padding: EdgeInsets.all(8.0), child: CircularProgressIndicator(color: Colors.white,))),
+            Visibility( visible: isLoading, child:Padding(padding: EdgeInsets.all(8.0), child: CircularProgressIndicator(color: Colors.white,))),
             Padding(padding: EdgeInsets.all(8.0), child: Row(
               children: [
                 Expanded(
