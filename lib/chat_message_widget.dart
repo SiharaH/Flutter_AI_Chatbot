@@ -30,10 +30,37 @@ class ChatMessageWidget extends StatelessWidget {
                     child: Icon(Icons.smart_toy, color: Colors.white),
                   ),
               )
-              : const CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.person, color: Colors.blue),
+              : Container(
+                  margin: const EdgeInsets.only(right: 16.0),
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Icon(Icons.person, color: Colors.white),
+                  ),
+              ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: chatMessageType == ChatMessageType.bot
+                        ? const Color.fromARGB(255, 2, 119, 74)
+                        : const Color.fromARGB(255, 220, 220, 220),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: chatMessageType == ChatMessageType.bot
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                 ),
+              ],
+            ),
+          ),
         ],
       )
     );

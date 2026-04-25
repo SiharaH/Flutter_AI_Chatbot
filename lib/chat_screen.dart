@@ -81,6 +81,61 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               ),
             ),
+            Visibility(child:Padding(padding: EdgeInsets.all(8.0), child: CircularProgressIndicator(color: Colors.white,))),
+            Padding(padding: EdgeInsets.all(8.0), child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    textCapitalization: TextCapitalization.sentences,
+                    style: TextStyle(color: Colors.white),
+                    controller: _textcontroller,
+                    decoration: InputDecoration(
+                      hintText: 'Type your message here...',
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      filled: true,
+                      fillColor: Color(0xFF444654),
+                    ),
+                  ),
+                ),
+                Visibility(visible: !isLoading,
+                child : Container(
+                  color: Color(0xFF444654),
+                  child: IconButton(
+                    icon: const Icon(Icons.send, color: Colors.white),
+                    onPressed: () async {
+                      setState(() {
+                        _messages.add(ChatMessage(
+                          text: _textcontroller.text,
+                          chatMessageType: ChatMessageType.user,
+                        ));
+                        isLoading = true;
+                      });
+                    var input = _textcontroller.text;
+                    _textcontroller.clear();
+                    Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
+                    generateResponse(input).then((value) {
+                      setState(() {
+                        isLoading = false;
+                        _messages.add(ChatMessage(
+                          text: value,
+                          chatMessageType: ChatMessageType.bot,
+                        ));
+                        
+                      });
+                      _textcontroller.clear();
+                      Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
+                    });
+                    }, 
+                  )
+                  ,
+                ))
+              ],
+            ),),
+            Container(),
           ],
         ),
       ),
